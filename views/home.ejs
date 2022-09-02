@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=  title %></title>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <%= title %>
+        </h1>
+        <form id="input-form" action="/add-task" method="POST">
+            <div class="input-container">
+                <div id="description">
+                    <label for="description">DESCRIPTION</label> <br>
+                    <input type="text" name="description" placeholder="What do you need to do?" required>
+                </div>
+
+                <div id="category">
+                    <label for="category">CATEGORY</label> <br>
+                    <select name="category">
+                        <option disabled selected value> Choose a category </option>
+                        <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
+                        <option value="School">School</option>
+                        <option value="Cleaning">Health</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="date">
+                    <label for="dueDate">DUE DATE</label> <br>
+                    <input type="date" name="dueDate">
+                </div>
+            </div>
+                
+        </form>
+
+        <div class="button-container">
+            <button type="submit" id="add-btn" form="input-form">
+                <i class="fa fa-plus"></i>
+                ADD TASK
+            </button>
+            <button type="submit" id="del-btn" form="delete-form    ">
+                <i class="fa fa-trash-can"></i>
+                DELETE TASKS
+            </button>
+        </div>
+
+        <div class="task-container">
+            <form id="delete-form" action="/delete-task" method="POST">
+                <% for(let i = 0; i < list.length; i++) { %>
+                    <div class="task">
+                        <div class="checkbox">
+                            <input type="checkbox" name= "tasks" class="item" value="<%= list[i]._id %>" id="<%= 'tasks' + (i + 1) %>" >
+                            <label for="<%= 'tasks' + (i + 1) %>">
+                               " <%= list[i].description %>"
+                            </label>
+                            <p class="date"> 
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <%= list[i].dueDate %>
+                            </p>
+                        </div>
+                        
+                        <% if(list[i].category != undefined) { %>
+                        <span class="category"> <%= list[i].category %> </span>
+                        <% } %>
+                        <br>
+                    </div>
+                <% } %>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
